@@ -1,9 +1,28 @@
+/*
 pipeline {
     agent { docker { image 'maven:3.3.3' } }
     stages {
         stage('build') {
             steps {
                 sh 'mvn --version'
+            }
+        }
+    }
+}
+*/
+
+// Multi-step pipeline (allowing to complete multiple steps along the way) 
+//sh is used to execute a shell command in Pipeline
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'echo "Hello World"'
+                sh '''
+                    echo "Multiline shell steps works too"
+                    ls -lah
+                '''
             }
         }
     }
