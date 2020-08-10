@@ -56,7 +56,7 @@ pipeline {
 /*
 This set up can be used for when a pipeline has finished executing, we can run clean-up steps or perform some actions based on the outcome of the pipeline.
 These actions can be performed in the post section. 
-*/
+
 pipeline {
     agent any
     stages {
@@ -82,6 +82,25 @@ pipeline {
         changed {
             echo 'This will run only if the state of the Pipeline has changed'
             echo 'For example, if the Pipeline was previously failing but is now successful'
+        }
+    }
+}
+
+*/ 
+
+
+pipeline {
+    agent any
+    stages {
+        stage('Test') {
+            steps {
+                sh './gradlew check'
+            }
+        }
+    }
+    post {
+        always {
+            junit 'build/reports/**/*.xml'
         }
     }
 }
